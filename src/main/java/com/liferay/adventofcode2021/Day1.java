@@ -4,7 +4,6 @@ package com.liferay.adventofcode2021;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -16,11 +15,27 @@ public class Day1 {
 		ClassLoader classLoader = Day1.class.getClassLoader();
 		File file = new File(classLoader.getResource("day1").getFile());
 
-		System.out.println( firstPart(Files.lines(Path.of(file.getPath()))));
+		System.out.println(firstPart(Files.lines(file.toPath())));
+		System.out.println(
+			firstPartWithFor(Files.lines(file.toPath())));
 
-		System.out.println(firstPartWithFor(Files.lines(Path.of(file.getPath()))));
 
 
+	}
+
+	private static String firstPartWithFor(Stream<String> lines) {
+		List<Integer> beeps =
+			lines.map(Integer::parseInt).collect(Collectors.toList());
+
+		AtomicInteger counter = new AtomicInteger();
+
+		//you must store all the list on memory
+		for (int i = 1; i < beeps.size(); i++) {
+			if (beeps.get(i) > beeps.get(i - 1)) {
+				counter.getAndIncrement();
+			}
+		}
+		return String.valueOf(counter);
 	}
 
 	private static AtomicInteger firstPart(Stream<String> lines) {
@@ -28,7 +43,7 @@ public class Day1 {
 		AtomicInteger counter = new AtomicInteger();
 
 		lines.map(Integer::parseInt).reduce((x, y) -> {
-			if (x < y){
+			if (x < y) {
 				counter.getAndIncrement();
 			}
 			return y;
