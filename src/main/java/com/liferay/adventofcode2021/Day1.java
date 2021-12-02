@@ -52,5 +52,23 @@ int counter2 = 0;
 		}
 		return String.valueOf(counter);
 	}
+	
+	
+	private static String firstPartWithFor(Stream<String> lines) {
+		List<Integer> beeps = lines.map(Integer::parseInt).collect(Collectors.toList());
+		AtomicInteger counter = new AtomicInteger();
+
+		//you must store all the list on memory
+		for(int i = 0; i < beeps.size()-3; i++){
+			Integer val1 = beeps.get(i)+beeps.get(i+1)+beeps.get(i+2);
+			Integer val2 = beeps.get(i+1)+beeps.get(i+2)+beeps.get(i+3);
+			
+			if(val2>val1){
+				counter.getAndIncrement();
+			}
+		}
+		return String.valueOf(counter);
+	}
+	
 
 }
