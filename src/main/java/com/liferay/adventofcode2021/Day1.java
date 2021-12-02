@@ -16,6 +16,44 @@ public class Day1 {
 		ClassLoader classLoader = Day1.class.getClassLoader();
 		File file = new File(classLoader.getResource("day1").getFile());
 
+		System.out.println( firstPart(Files.lines(Path.of(file.getPath()))));
+
+		System.out.println(firstPartWithFor(Files.lines(Path.of(file.getPath()))));
+
+
+
+
+		System.out.println(secondPartWithFor(Files.lines(Path.of(file.getPath()))));
+	}
+
+	private static AtomicInteger firstPart(Stream<String> lines) {
+
+		AtomicInteger counter = new AtomicInteger();
+
+		lines.map(Integer::parseInt).reduce((x, y) -> {
+			if (x < y){
+				counter.getAndIncrement();
+			}
+			return y;
+		});
+		return counter;
+	}
+
+
+
+	private static String firstPartWithFor(Stream<String> lines) {
+		List<Integer> beeps = lines.map(Integer::parseInt).collect(Collectors.toList());
+
+		AtomicInteger counter = new AtomicInteger();
+int counter2 = 0;
+		//you must store all the list on memory
+		for(int i = 1; i < beeps.size(); i++){
+			if(beeps.get(i) > beeps.get(i-1)){
+				counter.getAndIncrement();
+				counter2++;
+			}
+		}
+		return String.valueOf(counter);
 	}
 
 }
