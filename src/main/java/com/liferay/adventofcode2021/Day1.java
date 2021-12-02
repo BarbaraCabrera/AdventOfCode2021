@@ -21,9 +21,6 @@ public class Day1 {
 		System.out.println(firstPartWithFor(Files.lines(Path.of(file.getPath()))));
 
 
-
-
-		System.out.println(secondPartWithFor(Files.lines(Path.of(file.getPath()))));
 	}
 
 	private static AtomicInteger firstPart(Stream<String> lines) {
