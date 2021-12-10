@@ -23,8 +23,7 @@ public class Day2 {
         // in my case the name of the file is diff.
         File file = new File(classLoader.getResource("day2.txt").getFile());
 
-
-        System.out.println(firstPartWithFor(Files.lines(file.toPath())));
+        System.out.println(firstPart(Files.lines(file.toPath())));
         //(sum(down) - sum(up))*sum(forward)
 
         // I will reuse the list so I extract here to pass to the methods
@@ -43,12 +42,12 @@ public class Day2 {
         Integer counterD = 0;
         Integer counterU = 0;
 
-        for(int i = 0; i < beeps.size(); i++){
+        for (int i = 0; i < beeps.size(); i++) {
 
             String commands = beeps.get(i);
             String[] movements = commands.split(" ");
 
-            if(movements[0].equals("forward")) {
+            if (movements[0].equals("forward")) {
                 counterF += Integer.parseInt(movements[1]);
             } else if (movements[0].equals("down")) {
                 counterD += Integer.parseInt(movements[1]);
@@ -56,7 +55,7 @@ public class Day2 {
                 counterU += Integer.parseInt(movements[1]);
             }
         }
-        Integer Result = counterF * (counterD-counterU);
+        Integer Result = counterF * (counterD - counterU);
         System.out.println("first part done");
         return String.valueOf(Result);
 
@@ -81,7 +80,7 @@ public class Day2 {
         return forward * down;
 
     }
-    
+
     private static String secondPart(Stream<String> lines) {
         List<String> beeps = lines.collect(Collectors.toList());
         Integer depth = 0;
