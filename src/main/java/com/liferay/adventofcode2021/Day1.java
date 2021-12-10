@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Day1 {
@@ -18,12 +19,16 @@ public class Day1 {
         System.out.println(firstPart(Files.lines(file.toPath())));
         System.out.println(
                 firstPartWithFor(Files.lines(file.toPath())));
+        System.out.println(
+                withWindows(Files.lines(file.toPath()), 1));
 
 
         System.out.println(
                 secondPartWithForIncreasing(Files.lines(file.toPath())));
         System.out.println(
                 secondPartWithForDecreasing(Files.lines(file.toPath())));
+        System.out.println(
+                withWindows(Files.lines(file.toPath()), 3));
     }
 
     private static String firstPartWithFor(Stream<String> lines) {
@@ -68,6 +73,22 @@ public class Day1 {
             }
         }
         return String.valueOf(counter);
+    }
+
+    private static int withWindows(Stream<String> lines, int windowSize) {
+        List<Integer> beeps =
+                lines.map(Integer::parseInt).collect(Collectors.toList());
+
+        AtomicInteger counter = new AtomicInteger();
+
+        for (int i = 0; i < beeps.size() - windowSize; i++) {
+            int x = IntStream.range(i, i + windowSize).map(beeps::get).reduce(0, Integer::sum);
+            int y = IntStream.range(i + 1, i + windowSize + 1).map(beeps::get).reduce(0, Integer::sum);
+            if (x < y) {
+                counter.getAndIncrement();
+            }
+        }
+        return counter.get();
     }
 
     private static String secondPartWithForDecreasing(Stream<String> lines) {
