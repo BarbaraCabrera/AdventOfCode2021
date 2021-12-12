@@ -20,7 +20,9 @@ public class Day1 {
         System.out.println(
                 firstPartWithFor(Files.lines(file.toPath())));
         System.out.println(
-                withWindows(Files.lines(file.toPath()), 1));
+                withWindowsRange(Files.lines(file.toPath()), 1));
+        System.out.println(
+                withWindowsSublist(Files.lines(file.toPath()), 1));
 
 
         System.out.println(
@@ -28,7 +30,9 @@ public class Day1 {
         System.out.println(
                 secondPartWithForDecreasing(Files.lines(file.toPath())));
         System.out.println(
-                withWindows(Files.lines(file.toPath()), 3));
+                withWindowsRange(Files.lines(file.toPath()), 3));
+        System.out.println(
+                withWindowsSublist(Files.lines(file.toPath()), 3));
     }
 
     private static String firstPartWithFor(Stream<String> lines) {
@@ -75,7 +79,7 @@ public class Day1 {
         return String.valueOf(counter);
     }
 
-    private static int withWindows(Stream<String> lines, int windowSize) {
+    private static int withWindowsRange(Stream<String> lines, int windowSize) {
         List<Integer> beeps =
                 lines.map(Integer::parseInt).collect(Collectors.toList());
 
@@ -91,6 +95,22 @@ public class Day1 {
         return counter.get();
     }
 
+    private static int withWindowsSublist(Stream<String> lines, int windowSize) {
+        List<Integer> beeps =
+                lines.map(Integer::parseInt).collect(Collectors.toList());
+
+        AtomicInteger counter = new AtomicInteger();
+
+        for (int i = 0; i < beeps.size() - windowSize; i++) {
+            int x = beeps.subList(i, i + windowSize).stream().reduce(0, Integer::sum);
+            int y = beeps.subList(i + 1, i + windowSize + 1).stream().reduce(0, Integer::sum);
+            if (x < y) {
+                counter.getAndIncrement();
+            }
+        }
+        return counter.get();
+    }
+
     private static String secondPartWithForDecreasing(Stream<String> lines) {
         List<Integer> beeps =
                 lines.map(Integer::parseInt).collect(Collectors.toList());
@@ -98,6 +118,7 @@ public class Day1 {
         AtomicInteger counter = new AtomicInteger();
 
         for (int i = 3; i < beeps.size(); i++) {
+
             int x = beeps.get(i - 3) + beeps.get(i - 2) + beeps.get(i - 1);
             int y = beeps.get(i - 2) + beeps.get(i - 1) + beeps.get(i);
             if (x < y) {
