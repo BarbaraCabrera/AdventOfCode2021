@@ -44,7 +44,6 @@ public class Day3 {
         String epsilon = epsilonRateSB.toString();
         Integer powerCons = Integer.parseInt(gamma, 2) * Integer.parseInt(epsilon, 2);
 
-
         return String.valueOf(powerCons);
     }
 
@@ -54,7 +53,6 @@ public class Day3 {
                 counterOfOnes[j]++;
             }
         }
-
     }
 
 
@@ -94,8 +92,8 @@ public class Day3 {
 
         return String.valueOf(powerCons);
     }
-    
-    private List<String> getListwithPrioritaryByte(List<String> original, int position){
+
+    private List<String> getListwithPrioritaryByte(List<String> original, int position) {
 
         int[] counterOfOnes = new int[original.get(1).length()];
         List<String> Retorno = new ArrayList<String>();
@@ -103,8 +101,8 @@ public class Day3 {
 
 
         for (String line : original) {
-            if(line.charAt(position).equal())
+            // if(line.charAt(position).equal())
         }
-
+        return Retorno;
     }
 }
